@@ -14,7 +14,7 @@
 - plugins 移行に server に関する設定を追加
 - host は true にし、port は 3000 で起動するようにする
 
-`
+```
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 
@@ -26,7 +26,7 @@ host: true,
 port: 3000,
 }
 })
-`
+```
 
 ## 3. npm install を実行
 
