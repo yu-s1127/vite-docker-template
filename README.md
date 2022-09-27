@@ -4,7 +4,7 @@
 
 ## 1. Vite でプロジェクトを作成
 
-`docker-compose build`
+`docker-compose build`<br>
 `docker-compose run node npm create vite@latest`
 
 - vite のバージョンは任意で変更してください
