@@ -1,11 +1,58 @@
 version: '3.9'
+
+networks:
+  app:
+
 services:
-  node:
+  frontend:
     build:
       context: .
-      dockerfile: Dockerfile
+      dockerfile: ./.docker/backend/Dockerfile
+    container_name: frontend
+    tty: true
     volumes:
-      - .:/app
-    command: sh -c "cd app && npm run dev"
+      - .:/frontend
+    working_dir: '/frontend'
+    command: sh -c "cd frontend && npm run dev"
     ports:
-      - '3000:3000'
+      - 3000:3000
+    networks:
+      - app
+
+  db:
+    image: mysql:8
+    environment:
+      MYSQL_ROOT_PASSWORD: root_password
+      MYSQL_DATABASE: test_db
+      MYSQL_USER: user
+      MYSQL_PASSWORD: password
+    ports:
+      - 3306:3306
+    networks:
+      - app
+
+  backend:
+    build:
+      context: .
+      dockerfile: ./.docker/backend/Dockerfile
+    container_name: back
+    tty: true
+    volumes:
+      - .:/backend
+    working_dir: '/backend'
+    command: sh -c "cd backend && npm start"
+    ports:
+      - 8080:8080
+    networks:
+      - app
+    depends_on:
+      - db
+
+  mail:
+    image: mailhog/mailhog
+    container_name: mailhog
+    ports:
+      - '8025:8025'
+      - '1025:1025'
+    networks:
+      - app

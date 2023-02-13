@@ -4,5 +4,3 @@ FROM node:18-alpine
 # install app
 RUN apk update \
     && apk upgrade
-
-WORKDIR /app
